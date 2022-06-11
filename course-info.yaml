@@ -1,0 +1,11 @@
+type: hyperskill
+title: Knight's Tour Puzzle
+language: English
+summary: The Knight’s Tour is a fun puzzle where you move the knight so that it visits
+  every square of the chessboard once. The rules are simple and fun, but the game
+  is really hard to master. Let’s make a program to find a solution!<br/><br/>Learn
+  more at <a href="https://hyperskill.org/projects/141?utm_source=ide&utm_medium=ide&utm_campaign=ide&utm_content=project-card">https://hyperskill.org/projects/141</a>
+programming_language: Python
+content:
+- Knight's Tour Puzzle
+mode: Study

@@ -1,0 +1,131 @@
+type: edu
+files:
+- name: tests.py
+  visible: false
+  text: |
+    from hstest.stage_test import *
+    from hstest.test_case import TestCase, SimpleTestCase
+    from hstest.check_result import CheckResult
+    import random
+
+    random.seed()
+    x_start = random.randint(1, 8)
+    y_start = random.randint(1, 8)
+    start = str(x_start) + " " + str(y_start)
+
+    ncols = 8
+    nrows = 8
+
+
+    class KnightsTourTest(StageTest):
+        def generate(self) -> List[TestCase]:
+            return [TestCase(stdin=[self.check_request]),
+                    TestCase(stdin=["1 10", start], check_function=self.check_bounds),
+                    TestCase(stdin=["-1 5", start], check_function=self.check_bounds),
+                    TestCase(stdin=["1", start], check_function=self.check_length),
+                    TestCase(stdin=["1 1 1", start], check_function=self.check_length),
+                    TestCase(stdin=["1 a", start], check_function=self.check_num),
+                    TestCase(stdin=start), ]
+
+        def check_request(self, output):
+            output = output.lower()
+            if "enter" not in output.lower() or "starting position" not in output.lower():
+                return CheckResult.wrong("Your program should ask for the knight's starting position")
+            return start
+
+        def check_bounds(self, reply: str, attach: Any) -> CheckResult:
+            if "invalid" not in reply.lower():
+                return CheckResult.wrong("Your program should check if the position is within bounds")
+            return CheckResult.correct()
+
+        def check_length(self, reply: str, attach: Any) -> CheckResult:
+            if "invalid" not in reply.lower():
+                return CheckResult.wrong("Your program should check if there are the right number of inputs")
+            return CheckResult.correct()
+
+        def check_num(self, reply: str, attach: Any) -> CheckResult:
+            if "invalid" not in reply.lower():
+                return CheckResult.wrong("Your program should only accept integer inputs")
+            return CheckResult.correct()
+
+        def check(self, reply: str, attach: Any) -> CheckResult:
+            # check output
+            try:
+                if reply == "":
+                    return CheckResult.wrong("Output was empty")
+                border = "-------------------\n"
+                if border not in reply:
+                    return CheckResult.wrong(f"The board borders aren't found.\n"
+                                             f"For the current board, \n"
+                                             f"the following line should be printed as a border:\n"
+                                             f"{border}\n"
+                                             f"That is, a line of length {len(border)}.")
+                reply = reply.split(border)
+                if len(reply) != 3:
+                    return CheckResult.wrong("Incorrect border or spacing. \n"
+                                             "There should be 2 identical borders for a board.\n"
+                                             f"For the current board, \n"
+                                             f"the following line should be printed as a border:\n"
+                                             f"{border}\n"
+                                             f"That is, a line of length {len(border)}.")
+            except:
+                return CheckResult.wrong("Incorrect output")
+
+            # extract board and xlabels
+            try:
+                board = reply[1].replace(' | \n', ' |\n')
+                board = board.split(" |\n")[0:nrows]
+                if len(board) != nrows:
+                    return CheckResult.wrong("Incorrect side borders or format")
+                xaxis = reply[2].strip().split(" ")
+            except IndexError:
+                return CheckResult.wrong("Incorrect top or bottom border")
+
+            if len(xaxis) != len(board):
+                return CheckResult.wrong("Make sure you output column numbers under the board in the correct format.")
+
+            # iterate through rows to check
+            for n, row in enumerate(board):
+                rownum = nrows - n
+                colnum = n + 1
+                try:
+                    output_column_number = int(xaxis[n])
+                except ValueError:
+                    return CheckResult.wrong("Make sure that the last line of your output is the line with column numbers.\n"
+                                             "These numbers should be separated by whitespace characters.")
+                if colnum != output_column_number:
+                    return CheckResult.wrong("Incorrect column numbers")
+                if rownum == y_start:
+                    row = row.split("|")
+                    if len(row) != 2:
+                        return CheckResult.wrong("Incorrect side borders or format")
+                    try:
+                        row_number = int(row[0])
+                    except ValueError:
+                        return CheckResult.wrong("The first symbol in each line of the board should be a number of the line.\n"
+                                                 "In line {0}, the first symbol is not a number.".format(n))
+                    if rownum != row_number:
+                        return CheckResult.wrong("Incorrect row numbers")
+                    row = row[1].strip().split(" ")
+                    if len(row) != ncols:
+                        return CheckResult.wrong("Incorrect board dimension")
+                    if row[x_start - 1] == "_":
+                        return CheckResult.wrong("Incorrect starting position")
+
+            return CheckResult.correct()
+
+
+    if __name__ == '__main__':
+        KnightsTourTest().run_tests()
+  learner_created: false
+- name: game.py
+  visible: true
+  text: |
+    # Write your code here
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/11568#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 02 Jun 2022 01:58:19 UTC
+record: 1

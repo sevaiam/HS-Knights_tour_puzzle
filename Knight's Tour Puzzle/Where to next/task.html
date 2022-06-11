@@ -1,0 +1,72 @@
+<h5 id="description">Description</h5>
+
+<p>Once the board is set up, let's see where our knight can move.</p>
+
+<p>The knight moves in an L-shape, so it has to move 2 squares horizontally and 1 square vertically, or 2 squares vertically and 1 square horizontally.</p>
+
+<p>Here are two examples showing how the knight can move. In the first example, there are 8 possible moves for the knight:</p>
+
+<p><img alt="" height="253" src="https://ucarecdn.com/c58f9c0a-d084-4a99-8f28-e1eb8cd271cb/" width="253"></p>
+
+<p>In the second example, there are only 3 possible moves since the knight cannot leave the board:</p>
+
+<p><img alt="" height="253" name="knightmoves2.png" src="https://ucarecdn.com/0d2699a1-d792-4c44-ab54-0d9367025d7e/" width="253"></p>
+
+<h5 id="objectives">Objectives</h5>
+
+<p>In this stage, you should modify your program to do the following:</p>
+
+<ol>
+	<li>Check all 8 possible moving directions from the starting position.</li>
+	<li>If the move is possible, mark the landing position with the letter 'O'.</li>
+	<li>If the move is not possible, no action is required.</li>
+</ol>
+
+<p>Don't forget that column and row numbers, as well as the knight position and the 'O' letter for the landing position, should be aligned to the right. For example, for a three-symbols long placeholder, the landing position should look like <code class="java">__O</code>.</p>
+
+<p>Please, don't forget about functional decomposition: splitting your code into reusable functions is very important for the next stages.</p>
+
+<h5 id="examples">Examples</h5>
+
+<p>The greater-than symbol followed by space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board dimensions: &gt; 6 5
+Enter the knight's starting position: &gt; 4 2
+
+Here are the possible moves:
+ ---------------------
+5| __ __ __ __ __ __ |
+4| __ __  O __  O __ |
+3| __  O __ __ __  O |
+2| __ __ __  X __ __ |
+1| __  O __ __ __  O |
+ ---------------------
+    1  2  3  4  5  6</code></pre>
+
+<p><strong>Example 2</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board dimensions: &gt; 3 4
+Enter the knight's starting position: &gt; 2 2
+
+Here are the possible moves:
+ ------------
+4|  O __  O |
+3| __ __ __ |
+2| __  X __ |
+1| __ __ __ |
+ ------------
+    1  2  3</code></pre>
+
+<p><strong>Example 3</strong></p>
+
+<pre><code class="language-no-highlight">Enter your board dimensions: &gt; 1 2
+Enter the knight's starting position: &gt; 1 2
+
+Here are the possible moves:
+ -----
+2| X |
+1| _ |
+ -----
+   1</code></pre>
